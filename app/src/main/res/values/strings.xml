@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitLife</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Workout Messages -->
+    <string name="loading_workouts">Loading workouts...</string>
+    <string name="no_workouts_message">No Workouts Yet\n\nTap the + button to create your first workout</string>
+    <string name="deleting">Deleting...</string>
+    <string name="workout_deleted">Workout deleted</string>
+    <string name="workout_completed">Completed!</string>
+    <string name="workout_incomplete">Marked as incomplete</string>
+    <string name="delegate_instruction">Share workouts from the share button</string>
+
+    <!-- Dialog Messages -->
+    <string name="delete_workout">Delete Workout</string>
+    <string name="delete_workout_message">Are you sure you want to delete "%s"?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logout_title">Logout</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="exit_title">Exit</string>
+    <string name="exit_message">Do you want to exit FitLife?</string>
+
+    <!-- Content Descriptions -->
+    <string name="add_workout">Add Workout</string>
+
+    <!-- Create Workout Screen -->
+    <string name="create_workout">Create Workout</string>
+    <string name="edit_workout">Edit Workout</string>
+    <string name="workout_name">Workout Name</string>
+    <string name="workout_description">Description (Optional)</string>
+    <string name="workout_image">Workout Image</string>
+    <string name="add_image">Add Image</string>
+    <string name="save_workout">Save Workout</string>
+    <string name="saving">Saving...</string>
+    <string name="workout_created">Workout created successfully!</string>
+    <string name="workout_updated">Workout updated successfully!</string>
+    <string name="workout_name_required">Workout name is required</string>
+
+    <!-- Exercises -->
+    <string name="exercises">Exercises</string>
+    <string name="add_exercise">+ Add Exercise</string>
+    <string name="edit_exercise">Edit Exercise</string>
+    <string name="exercise_name">Exercise Name</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+    <string name="equipment">Equipment (Optional)</string>
+    <string name="instructions">Instructions (Optional)</string>
+    <string name="no_exercises">No exercises added yet</string>
+    <string name="tap_add_exercise">Tap + to add your first exercise</string>
+    <string name="add_at_least_one_exercise">Add at least one exercise</string>
+    <string name="exercise_added">Exercise added</string>
+    <string name="exercise_updated">Exercise updated</string>
+    <string name="exercise_deleted">Exercise deleted</string>
+    <string name="exercise_name_required">Exercise name is required</string>
+    <string name="sets_required">Sets are required</string>
+    <string name="reps_required">Reps are required</string>
+    <string name="delete_exercise">Delete Exercise</string>
+    <string name="delete_exercise_message">Delete "%s"?</string>
+    <string name="image_added">Image added</string>
+
+    <!-- Common Buttons -->
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+    <string name="share">Share</string>
+    <string name="done">Done</string>
+    <string name="back">Back</string>
+
+    <!-- Profile Screen -->
+    <string name="my_profile">My Profile</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+
+    <!-- Delegate Screen -->
+    <string name="delegate_workout">Delegate Workout</string>
+    <string name="workout_equipment">Workout Equipment:</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="send_sms">Send via SMS</string>
+    <string name="sms_sent">SMS sent successfully!</string>
+    <string name="sms_failed">Failed to send SMS</string>
+    <string name="permission_required">SMS permission required</string>
+    <string name="equipment_list">Equipment List</string>
+    <string name="select_workout_first">Please select a workout first</string>
+
+    <!-- Workout Detail Screen -->
+    <string name="workout_details">Workout Details</string>
+    <string name="equipment_needed">Equipment Needed</string>
+    <string name="exercises_list">Exercises</string>
+    <string name="mark_complete">Mark Complete</string>
+    <string name="mark_incomplete">Mark Incomplete</string>
+    <string name="no_equipment">No equipment needed</string>
+
+    <!-- Validation Messages -->
+    <string name="enter_valid_phone">Please enter a valid phone number</string>
+    <string name="fill_all_fields">Please fill all fields</string>
+    <string name="password_mismatch">Passwords do not match</string>
+    <string name="password_too_short">Password must be at least 6 characters</string>
+    <string name="invalid_email">Please enter a valid email address</string>
+    <string name="registration_success">Registration successful! Please login.</string>
+    <string name="registration_failed">Registration failed. Please try again.</string>
+    <string name="login_success">Login successful! Welcome %s!</string>
+    <string name="login_failed">Invalid email or password</string>
+    <string name="email_exists">Email already registered!</string>
+
+    <!-- Workout List -->
+    <string name="my_workouts">My Workouts</string>
+    <string name="no_workouts">No workouts yet</string>
+    <string name="tap_to_create">Tap the + button to create your first workout</string>
+</resources>

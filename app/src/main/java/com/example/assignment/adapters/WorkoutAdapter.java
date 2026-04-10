@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.TypedValue;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.example.assignment.R;
 import com.example.assignment.models.Workout;
 import java.util.ArrayList;
@@ -90,6 +92,19 @@ public class WorkoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             details = "No description";
         }
         workoutHolder.tvWorkoutDetails.setText(details);
+
+        String imagePath = workout.getImagePath();
+        Glide.with(workoutHolder.ivWorkoutImage.getContext()).clear(workoutHolder.ivWorkoutImage);
+        if (imagePath != null && !imagePath.isEmpty()) {
+            Glide.with(workoutHolder.ivWorkoutImage.getContext())
+                    .load(imagePath)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder_workout)
+                    .error(R.drawable.placeholder_workout)
+                    .into(workoutHolder.ivWorkoutImage);
+        } else {
+            workoutHolder.ivWorkoutImage.setImageResource(R.drawable.placeholder_workout);
+        }
 
         workoutHolder.cbCompleted.setOnCheckedChangeListener(null);
         workoutHolder.cbCompleted.setChecked(workout.isCompleted());
@@ -189,6 +204,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     static class WorkoutViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
+        ImageView ivWorkoutImage;
         TextView tvWorkoutName, tvWorkoutDetails, tvCompletedBadge;
         Button btnEdit, btnDelete, btnDelegate;
         CheckBox cbCompleted;
@@ -196,6 +212,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         WorkoutViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
+            ivWorkoutImage = itemView.findViewById(R.id.ivWorkoutImage);
             tvWorkoutName = itemView.findViewById(R.id.tvWorkoutName);
             tvWorkoutDetails = itemView.findViewById(R.id.tvWorkoutDetails);
             tvCompletedBadge = itemView.findViewById(R.id.tvCompletedBadge);

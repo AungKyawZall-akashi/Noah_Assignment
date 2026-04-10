@@ -412,6 +412,10 @@ public class MainDashboardActivity extends AppCompatActivity implements
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(new Intent(MainDashboardActivity.this, MyWorkoutsActivity.class));
             return true;
+        } else if (id == R.id.nav_profile) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(MainDashboardActivity.this, ProfileActivity.class));
+            return true;
         } else if (id == R.id.nav_light_mode) {
             drawerLayout.closeDrawer(GravityCompat.START);
             sessionManager.setDarkModeEnabled(false);

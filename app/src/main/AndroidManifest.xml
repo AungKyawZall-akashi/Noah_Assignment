@@ -75,6 +75,9 @@
         <activity
             android:name=".activities.DailyRoutineActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
 
     </application>
 

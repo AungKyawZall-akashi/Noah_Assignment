@@ -7,7 +7,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@android:color/white"
+    app:cardBackgroundColor="@color/card_background"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="Workout description..."
                 android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/text_secondary"
                 android:layout_marginTop="4dp"
                 android:maxLines="2"
                 android:ellipsize="end"/>
@@ -125,7 +125,7 @@
                         android:text="0 exercises"
                         android:textSize="12sp"
                         android:layout_marginStart="4dp"
-                        android:textColor="@android:color/darker_gray"/>
+                        android:textColor="@color/text_secondary"/>
 
                 </LinearLayout>
 
@@ -148,7 +148,7 @@
                         android:text="0 items"
                         android:textSize="12sp"
                         android:layout_marginStart="4dp"
-                        android:textColor="@android:color/darker_gray"/>
+                        android:textColor="@color/text_secondary"/>
 
                 </LinearLayout>
 

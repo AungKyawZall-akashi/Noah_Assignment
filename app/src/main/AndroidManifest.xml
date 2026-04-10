@@ -40,6 +40,9 @@
             android:name=".activities.MainDashboardActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.MyWorkoutsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CreateWorkoutActivity"
             android:exported="false" />
         <activity

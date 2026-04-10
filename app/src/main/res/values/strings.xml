@@ -24,6 +24,8 @@
     <string name="no">No</string>
     <string name="logout_title">Logout</string>
     <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="dark_mode">Dark Mode</string>
     <string name="exit_title">Exit</string>
     <string name="exit_message">Do you want to exit FitLife?</string>
 
@@ -67,6 +69,7 @@
 
     <!-- Common Buttons -->
     <string name="edit">Edit</string>
+    <string name="create">Create</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
     <string name="share">Share</string>
@@ -86,7 +89,10 @@
     <string name="delegate_workout">Delegate Workout</string>
     <string name="workout_equipment">Workout Equipment:</string>
     <string name="phone_number">Phone Number</string>
+    <string name="recipient_phone_number">Recipient Phone Number</string>
+    <string name="recipient_email">Recipient Email</string>
     <string name="send_sms">Send via SMS</string>
+    <string name="send_email">Send via Email</string>
     <string name="sms_sent">SMS sent successfully!</string>
     <string name="sms_failed">Failed to send SMS</string>
     <string name="permission_required">SMS permission required</string>
@@ -115,6 +121,8 @@
 
     <!-- Workout List -->
     <string name="my_workouts">My Workouts</string>
+    <string name="incomplete_workouts">Incomplete</string>
+    <string name="completed_workouts">Completed</string>
     <string name="no_workouts">No workouts yet</string>
     <string name="tap_to_create">Tap the + button to create your first workout</string>
 </resources>

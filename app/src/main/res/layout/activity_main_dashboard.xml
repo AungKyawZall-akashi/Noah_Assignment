@@ -63,7 +63,7 @@
             android:layout_margin="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
-            app:cardBackgroundColor="@android:color/white">
+            app:cardBackgroundColor="@color/card_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,6 +137,20 @@
                 android:text="0 workouts"
                 android:textSize="12sp"
                 android:textColor="@android:color/darker_gray"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCreateWorkout"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/create"
+                android:textAllCaps="false"
+                android:textColor="@color/primary_color"
+                android:backgroundTint="@android:color/transparent"
+                app:icon="@drawable/ic_add"
+                app:iconTint="@color/primary_color"
+                app:iconPadding="4dp" />
 
         </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import com.example.assignment.R;
 import com.example.assignment.utils.SessionManager;
 
@@ -13,6 +14,12 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SessionManager sessionManager = new SessionManager(this);
+        AppCompatDelegate.setDefaultNightMode(
+                sessionManager.isDarkModeEnabled()
+                        ? AppCompatDelegate.MODE_NIGHT_YES
+                        : AppCompatDelegate.MODE_NIGHT_NO
+        );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
@@ -21,8 +28,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Check if user is already logged in
-                SessionManager sessionManager = new SessionManager(SplashActivity.this);
-
                 if (sessionManager.isLoggedIn()) {
                     // User is logged in, go to MainActivity
                     Intent intent = new Intent(SplashActivity.this, MainDashboardActivity.class);

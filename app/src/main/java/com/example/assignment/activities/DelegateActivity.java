@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Patterns;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.example.assignment.R;
 import com.example.assignment.database.AppDatabase;
 import com.example.assignment.models.Exercise;
@@ -23,8 +25,11 @@ public class DelegateActivity extends AppCompatActivity {
 
     private static final String EXTRA_WORKOUT_ID = "workout_id";
 
+    private MaterialToolbar toolbar;
     private TextInputEditText etPhoneNumber;
+    private TextInputEditText etEmail;
     private MaterialButton btnSendSMS;
+    private MaterialButton btnSendEmail;
 
     private AppDatabase database;
     private ExecutorService executorService;
@@ -50,10 +55,21 @@ public class DelegateActivity extends AppCompatActivity {
             return;
         }
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.delegate_workout);
+        }
+        toolbar.setNavigationOnClickListener(v -> navigateToDashboard());
+
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
+        etEmail = findViewById(R.id.etEmail);
         btnSendSMS = findViewById(R.id.btnSendSMS);
+        btnSendEmail = findViewById(R.id.btnSendEmail);
 
         btnSendSMS.setEnabled(false);
+        btnSendEmail.setEnabled(false);
         loadWorkoutSummary();
 
         btnSendSMS.setOnClickListener(v -> {
@@ -74,6 +90,26 @@ public class DelegateActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.sms_failed, Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnSendEmail.setOnClickListener(v -> {
+            String email = etEmail.getText() != null ? etEmail.getText().toString().trim() : "";
+            if (!isValidEmail(email)) {
+                Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String workoutName = workout != null && workout.getName() != null ? workout.getName() : "Workout";
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:" + Uri.encode(email)));
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Workout: " + workoutName);
+            intent.putExtra(Intent.EXTRA_TEXT, buildSmsBody());
+
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.sms_failed, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadWorkoutSummary() {
@@ -87,6 +123,7 @@ public class DelegateActivity extends AppCompatActivity {
                 workout = loadedWorkout;
                 equipmentSummary = equipment;
                 btnSendSMS.setEnabled(workout != null);
+                btnSendEmail.setEnabled(workout != null);
 
                 if (workout == null) {
                     Toast.makeText(this, "Workout not found", Toast.LENGTH_SHORT).show();
@@ -142,6 +179,17 @@ public class DelegateActivity extends AppCompatActivity {
         if (phone == null) return false;
         String cleaned = phone.replace(" ", "").replace("-", "");
         return cleaned.length() >= 7;
+    }
+
+    private boolean isValidEmail(String email) {
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void navigateToDashboard() {
+        Intent intent = new Intent(this, MainDashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
     @Override

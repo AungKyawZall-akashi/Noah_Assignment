@@ -23,6 +23,12 @@
     <item android:title="Account">
         <menu>
             <item
+                android:id="@+id/nav_light_mode"
+                android:title="@string/light_mode" />
+            <item
+                android:id="@+id/nav_dark_mode"
+                android:title="@string/dark_mode" />
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="Logout" />

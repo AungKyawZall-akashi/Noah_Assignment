@@ -1,6 +1,8 @@
 package com.example.assignment.activities;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,11 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.example.assignment.R;
@@ -47,6 +53,7 @@ public class MainDashboardActivity extends AppCompatActivity implements
     private LinearLayout llEmptyState;
     private TextView tvEmptyState, tvWelcomeMessage, tvStats, tvWorkoutCount, tvMotivation;
     private Button btnCreateFirstWorkout;
+    private MaterialButton btnCreateWorkout;
     private ExecutorService executorService;
     private Handler mainHandler;
 
@@ -71,6 +78,7 @@ public class MainDashboardActivity extends AppCompatActivity implements
             setupToolbar();
             setupNavigationDrawer();
             setupRecyclerView();
+            setupSwipeGestures();
             setupClickListeners();
             setupMotivation();
 
@@ -99,6 +107,7 @@ public class MainDashboardActivity extends AppCompatActivity implements
             tvWorkoutCount = findViewById(R.id.tvWorkoutCount);
             tvMotivation = findViewById(R.id.tvMotivation);
             btnCreateFirstWorkout = findViewById(R.id.btnCreateFirstWorkout);
+            btnCreateWorkout = findViewById(R.id.btnCreateWorkout);
 
             database = AppDatabase.getInstance(this);
             sessionManager = new SessionManager(this);
@@ -181,7 +190,8 @@ public class MainDashboardActivity extends AppCompatActivity implements
 
     private void setupRecyclerView() {
         try {
-            workoutAdapter = new WorkoutAdapter(workoutList, this);
+            workoutAdapter = new WorkoutAdapter(this);
+            workoutAdapter.setGroupByCompletion(false);
             rvWorkouts.setLayoutManager(new LinearLayoutManager(this));
             rvWorkouts.setAdapter(workoutAdapter);
             rvWorkouts.setItemAnimator(null);
@@ -227,7 +237,7 @@ public class MainDashboardActivity extends AppCompatActivity implements
                 workoutList.addAll(workouts);
             }
 
-            workoutAdapter.notifyDataSetChanged();
+            workoutAdapter.setWorkouts(workoutList);
 
             if (workoutList.isEmpty()) {
                 showEmptyState(getString(R.string.no_workouts_message));
@@ -285,6 +295,13 @@ public class MainDashboardActivity extends AppCompatActivity implements
 
             if (btnCreateFirstWorkout != null) {
                 btnCreateFirstWorkout.setOnClickListener(v -> {
+                    Intent intent = new Intent(MainDashboardActivity.this, CreateWorkoutActivity.class);
+                    startActivity(intent);
+                });
+            }
+
+            if (btnCreateWorkout != null) {
+                btnCreateWorkout.setOnClickListener(v -> {
                     Intent intent = new Intent(MainDashboardActivity.this, CreateWorkoutActivity.class);
                     startActivity(intent);
                 });
@@ -388,8 +405,24 @@ public class MainDashboardActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_home || id == R.id.nav_my_workouts) {
+        if (id == R.id.nav_home) {
             drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        } else if (id == R.id.nav_my_workouts) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(MainDashboardActivity.this, MyWorkoutsActivity.class));
+            return true;
+        } else if (id == R.id.nav_light_mode) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            sessionManager.setDarkModeEnabled(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            recreate();
+            return true;
+        } else if (id == R.id.nav_dark_mode) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            sessionManager.setDarkModeEnabled(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            recreate();
             return true;
         } else if (id == R.id.nav_delegate) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -402,6 +435,93 @@ public class MainDashboardActivity extends AppCompatActivity implements
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setupSwipeGestures() {
+        Paint paint = new Paint();
+
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getBindingAdapterPosition();
+                Workout workout = workoutAdapter.getWorkoutAt(position);
+                if (workout == null) {
+                    workoutAdapter.notifyItemChanged(position);
+                    return;
+                }
+
+                workoutAdapter.notifyItemChanged(position);
+
+                if (direction == ItemTouchHelper.LEFT) {
+                    new AlertDialog.Builder(MainDashboardActivity.this)
+                            .setTitle(R.string.delete_workout)
+                            .setMessage(getString(R.string.delete_workout_message, workout.getName()))
+                            .setPositiveButton(R.string.delete, (dialog, which) -> deleteWorkout(workout))
+                            .setNegativeButton(R.string.cancel, null)
+                            .show();
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    markWorkoutCompleted(workout);
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                View itemView = viewHolder.itemView;
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    if (dX > 0) {
+                        paint.setColor(ContextCompat.getColor(MainDashboardActivity.this, R.color.success_color));
+                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), (float) itemView.getLeft() + dX, (float) itemView.getBottom(), paint);
+                    } else if (dX < 0) {
+                        paint.setColor(ContextCompat.getColor(MainDashboardActivity.this, R.color.error_color));
+                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom(), paint);
+                    }
+                }
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+
+        new ItemTouchHelper(callback).attachToRecyclerView(rvWorkouts);
+    }
+
+    private void markWorkoutCompleted(Workout workout) {
+        executorService.execute(() -> {
+            try {
+                workout.setCompleted(true);
+                database.workoutDao().update(workout);
+
+                mainHandler.post(() -> {
+                    loadWorkouts();
+                    Toast.makeText(MainDashboardActivity.this, workout.getName() + " " + getString(R.string.workout_completed), Toast.LENGTH_SHORT).show();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mainHandler.post(() -> loadWorkouts());
+            }
+        });
+    }
+
+    private void deleteWorkout(Workout workout) {
+        Toast.makeText(this, R.string.deleting, Toast.LENGTH_SHORT).show();
+        executorService.execute(() -> {
+            try {
+                database.workoutDao().delete(workout);
+                database.exerciseDao().deleteExercisesByWorkoutId(workout.getId());
+
+                mainHandler.post(() -> {
+                    loadWorkouts();
+                    Toast.makeText(MainDashboardActivity.this, R.string.workout_deleted, Toast.LENGTH_SHORT).show();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mainHandler.post(() -> Toast.makeText(MainDashboardActivity.this, "Error deleting workout", Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 
     private void logout() {

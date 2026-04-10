@@ -10,6 +10,7 @@ public class SessionManager {
     private static final String KEY_USER_EMAIL = "userEmail";
     private static final String KEY_USER_NAME = "userName";
     private static final String KEY_USER_PHONE = "userPhone";
+    private static final String KEY_DARK_MODE = "darkMode";
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -48,6 +49,15 @@ public class SessionManager {
 
     public String getUserPhone() {
         return pref.getString(KEY_USER_PHONE, "");
+    }
+
+    public void setDarkModeEnabled(boolean enabled) {
+        editor.putBoolean(KEY_DARK_MODE, enabled);
+        editor.apply();
+    }
+
+    public boolean isDarkModeEnabled() {
+        return pref.getBoolean(KEY_DARK_MODE, false);
     }
 
     public void logout() {

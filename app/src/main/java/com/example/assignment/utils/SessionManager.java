@@ -2,6 +2,8 @@ package com.example.assignment.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SessionManager {
     private static final String PREF_NAME = "FitLifePrefs";
@@ -11,6 +13,11 @@ public class SessionManager {
     private static final String KEY_USER_NAME = "userName";
     private static final String KEY_USER_PHONE = "userPhone";
     private static final String KEY_DARK_MODE = "darkMode";
+    private static final String KEY_PURCHASED_PACKAGES = "purchasedPackages";
+    private static final String KEY_PERSONAL_DIET_PLAN = "personalDietPlan";
+    private static final String KEY_DAILY_ROUTINE_MORNING = "dailyRoutineMorning";
+    private static final String KEY_DAILY_ROUTINE_AFTERNOON = "dailyRoutineAfternoon";
+    private static final String KEY_DAILY_ROUTINE_EVENING = "dailyRoutineEvening";
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -58,6 +65,54 @@ public class SessionManager {
 
     public boolean isDarkModeEnabled() {
         return pref.getBoolean(KEY_DARK_MODE, false);
+    }
+
+    public Set<String> getPurchasedPackageIds() {
+        Set<String> stored = pref.getStringSet(KEY_PURCHASED_PACKAGES, null);
+        if (stored == null) return new HashSet<>();
+        return new HashSet<>(stored);
+    }
+
+    public boolean isPackagePurchased(String packageId) {
+        if (packageId == null) return false;
+        Set<String> stored = pref.getStringSet(KEY_PURCHASED_PACKAGES, null);
+        return stored != null && stored.contains(packageId);
+    }
+
+    public void addPurchasedPackage(String packageId) {
+        if (packageId == null) return;
+        Set<String> current = getPurchasedPackageIds();
+        current.add(packageId);
+        editor.putStringSet(KEY_PURCHASED_PACKAGES, current);
+        editor.apply();
+    }
+
+    public void savePersonalDietPlan(String planText) {
+        editor.putString(KEY_PERSONAL_DIET_PLAN, planText != null ? planText : "");
+        editor.apply();
+    }
+
+    public String getPersonalDietPlan() {
+        return pref.getString(KEY_PERSONAL_DIET_PLAN, "");
+    }
+
+    public void saveDailyRoutine(String morning, String afternoon, String evening) {
+        editor.putString(KEY_DAILY_ROUTINE_MORNING, morning != null ? morning : "");
+        editor.putString(KEY_DAILY_ROUTINE_AFTERNOON, afternoon != null ? afternoon : "");
+        editor.putString(KEY_DAILY_ROUTINE_EVENING, evening != null ? evening : "");
+        editor.apply();
+    }
+
+    public String getDailyRoutineMorning() {
+        return pref.getString(KEY_DAILY_ROUTINE_MORNING, "");
+    }
+
+    public String getDailyRoutineAfternoon() {
+        return pref.getString(KEY_DAILY_ROUTINE_AFTERNOON, "");
+    }
+
+    public String getDailyRoutineEvening() {
+        return pref.getString(KEY_DAILY_ROUTINE_EVENING, "");
     }
 
     public void logout() {

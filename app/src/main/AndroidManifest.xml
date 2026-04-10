@@ -54,6 +54,27 @@
         <activity
             android:name=".activities.BmiActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.PackagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PackageDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.WorkoutInstructionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DietPlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PersonalDietPlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DailyRoutineActivity"
+            android:exported="false" />
 
     </application>
 

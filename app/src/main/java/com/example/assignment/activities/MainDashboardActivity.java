@@ -428,6 +428,14 @@ public class MainDashboardActivity extends AppCompatActivity implements
             drawerLayout.closeDrawer(GravityCompat.START);
             startActivity(new Intent(MainDashboardActivity.this, BmiActivity.class));
             return true;
+        } else if (id == R.id.nav_packages) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(MainDashboardActivity.this, PackagesActivity.class));
+            return true;
+        } else if (id == R.id.nav_daily_routine) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(MainDashboardActivity.this, DailyRoutineActivity.class));
+            return true;
         } else if (id == R.id.nav_delegate) {
             drawerLayout.closeDrawer(GravityCompat.START);
             Toast.makeText(this, R.string.delegate_instruction, Toast.LENGTH_SHORT).show();

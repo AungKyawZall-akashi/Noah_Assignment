@@ -22,6 +22,14 @@
             android:id="@+id/nav_bmi"
             android:icon="@drawable/ic_fitness"
             android:title="@string/bmi_calculator" />
+        <item
+            android:id="@+id/nav_packages"
+            android:icon="@drawable/ic_workout"
+            android:title="@string/packages" />
+        <item
+            android:id="@+id/nav_daily_routine"
+            android:icon="@drawable/ic_motivation"
+            android:title="@string/daily_routine" />
     </group>
 
     <item android:title="Account">

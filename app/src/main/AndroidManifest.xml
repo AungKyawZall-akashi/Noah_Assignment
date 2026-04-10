@@ -51,6 +51,9 @@
         <activity
             android:name=".activities.DelegateActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.BmiActivity"
+            android:exported="false" />
 
     </application>
 

@@ -26,6 +26,7 @@
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="bmi_calculator">BMI Calculator</string>
     <string name="exit_title">Exit</string>
     <string name="exit_message">Do you want to exit FitLife?</string>
 
@@ -75,6 +76,15 @@
     <string name="share">Share</string>
     <string name="done">Done</string>
     <string name="back">Back</string>
+    <string name="weight_kg">Weight (kg)</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="calculate_bmi">Calculate BMI</string>
+    <string name="bmi_result_placeholder">BMI: --</string>
+    <string name="enter_valid_bmi_values">Please enter valid weight and height</string>
+    <string name="bmi_underweight">Category: Underweight</string>
+    <string name="bmi_normal">Category: Normal</string>
+    <string name="bmi_overweight">Category: Overweight</string>
+    <string name="bmi_obese">Category: Obese</string>
 
     <!-- Profile Screen -->
     <string name="my_profile">My Profile</string>
